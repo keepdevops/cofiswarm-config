@@ -2,7 +2,7 @@
   "agents": [
     {
       "context": 1024,
-      "ctx_cap": 16384,
+      "ctx_cap": 6144,
       "description": "Designs system architecture, module boundaries, and technical roadmaps",
       "engine": "llama",
       "extra_args": [
@@ -18,14 +18,11 @@
       "name": "architect",
       "port": 8086,
       "read_timeout_secs": 510,
-      "rope_freq_scale": 0.5,
-      "rope_scaling": "yarn",
       "server_group": "coder7b",
       "system_prompt": "You are the Lead Architect. Output ASCII UML diagrams, component relationships, and architecture decisions. Be precise and visual.",
       "tags": [
         "planning"
-      ],
-      "yarn_orig_ctx": 4096
+      ]
     },
     {
       "context": 1024,
@@ -53,7 +50,7 @@
     },
     {
       "context": 1024,
-      "ctx_cap": 16384,
+      "ctx_cap": 6144,
       "description": "Finds and fixes bugs, traces errors, and isolates root causes",
       "engine": "llama",
       "extra_args": [
@@ -69,20 +66,22 @@
       "name": "debugger",
       "port": 8086,
       "read_timeout_secs": 180,
-      "rope_freq_scale": 0.5,
-      "rope_scaling": "yarn",
       "server_group": "coder7b",
       "system_prompt": "You are the Debug Specialist. Perform root cause analysis on bugs and failures. Diagnose error propagation and provide targeted fixes with code.",
       "tags": [
         "coding"
-      ],
-      "yarn_orig_ctx": 4096
+      ]
     },
     {
       "context": 2048,
       "description": "Routes tasks to the right specialists and coordinates the swarm",
       "engine": "llama",
-      "extra_args": [],
+      "extra_args": [
+        "--cache-type-k",
+        "q4_0",
+        "--cache-type-v",
+        "q8_0"
+      ],
       "flash_attn": true,
       "gpu_layers": 99,
       "max_tokens": 1024,
@@ -125,7 +124,6 @@
       "description": "Lightweight MLX Llama-3.2-1B for fast summarization and question decomposition",
       "engine": "mlx",
       "extra_args": [],
-      "kv_cache_type": "q4_0",
       "max_concurrency": 1,
       "max_tokens": 512,
       "model": "/Users/Shared/llama/models/MLX/MLX/Llama-3.2-1B-Instruct-4bit",
@@ -136,12 +134,11 @@
       "system_prompt": "You are a concise technical assistant. Summarize information clearly and identify the key question or task being asked. Be brief and direct.",
       "tags": [
         "synthesis"
-      ],
-      "turbo_quant": true
+      ]
     },
     {
       "context": 1024,
-      "ctx_cap": 16384,
+      "ctx_cap": 6144,
       "description": "Profiles and improves performance, complexity, and resource usage",
       "engine": "llama",
       "extra_args": [
@@ -157,18 +154,15 @@
       "name": "optimizer",
       "port": 8086,
       "read_timeout_secs": 120,
-      "rope_freq_scale": 0.5,
-      "rope_scaling": "yarn",
       "server_group": "coder7b",
       "system_prompt": "You are the Performance Optimizer. Identify bottlenecks and propose concrete fixes. Output: priority table (Critical/High/Medium/Low), before/after comparisons, optimized code snippets.",
       "tags": [
         "coding"
-      ],
-      "yarn_orig_ctx": 4096
+      ]
     },
     {
       "context": 1024,
-      "ctx_cap": 16384,
+      "ctx_cap": 6144,
       "description": "Writes complete, production-ready implementation code",
       "engine": "llama",
       "extra_args": [
@@ -184,20 +178,47 @@
       "name": "programmer",
       "port": 8086,
       "read_timeout_secs": 930,
-      "rope_freq_scale": 0.5,
-      "rope_scaling": "yarn",
       "server_group": "coder7b",
       "system_prompt": "You are an expert programmer. Always respond with:\n\n1. Brief reasoning and explanation in normal text (outside any code block).\n2. Exactly one primary code block unless the user explicitly asks for multiple files.\n\nUse this format:\n```<language>\n// filename=path/to/file.ext  (optional but recommended)\n<code here>\n```\n\n- Language tag must match the requested language (python, cpp, rust, typescript, javascript, shell, etc.).\n- Put ALL executable code inside the fence.\n- Do not add extra fences or code outside the block.\n- Use clear variable names, comments, and error handling.\n- If multiple files are needed, use one fence with filename comments or multiple fences with filename= on the info line.\n\nDeliver complete, runnable, production-quality code \u2014 no stubs, no TODOs, no ellipses.",
       "tags": [
         "coding"
+      ]
+    },
+    {
+      "context": 1024,
+      "ctx_cap": 6144,
+      "description": "Distills recent interaction episodes into durable declarative memory (Phase C reflection)",
+      "engine": "llama",
+      "extra_args": [
+        "--cache-type-k",
+        "q4_0",
+        "--cache-type-v",
+        "q8_0"
       ],
-      "yarn_orig_ctx": 4096
+      "flash_attn": true,
+      "gpu_layers": 99,
+      "max_tokens": 1024,
+      "model": "/Users/Shared/llama/models/medium/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
+      "name": "reflector",
+      "port": 8085,
+      "read_timeout_secs": 720,
+      "server_group": "llama8b",
+      "system_prompt": "You are the Reflection agent. Read recent interaction episodes and extract durable lessons worth remembering forever. Output ONLY a JSON array of {\"kind\":\"fact|preference|procedure\",\"text\":\"...\",\"id\":\"<optional-slug>\"}. At most 8 high-value, non-redundant lessons; output [] if nothing is worth keeping.",
+      "tags": [
+        "memory",
+        "reflection"
+      ]
     },
     {
       "context": 4096,
       "description": "Reviews code for correctness, style, and maintainability",
       "engine": "llama",
-      "extra_args": [],
+      "extra_args": [
+        "--cache-type-k",
+        "q4_0",
+        "--cache-type-v",
+        "q8_0"
+      ],
       "flash_attn": true,
       "gpu_layers": 99,
       "max_tokens": 1024,
@@ -215,7 +236,12 @@
       "context": 2048,
       "description": "Researches options, gathers context, and summarises findings",
       "engine": "llama",
-      "extra_args": [],
+      "extra_args": [
+        "--cache-type-k",
+        "q4_0",
+        "--cache-type-v",
+        "q8_0"
+      ],
       "flash_attn": true,
       "gpu_layers": 99,
       "max_tokens": 512,
