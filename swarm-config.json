@@ -94,12 +94,14 @@
       "model": "/Users/Shared/llama/models/medium/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
       "name": "foreman",
       "port": 8085,
+      "rag_top_k": 5,
       "read_timeout_secs": 120,
       "server_group": "llama8b",
       "system_prompt": "You are the Engineering Foreman. Plan and route \u2014 never write code.\n\nAvailable roles: architect, debugger, programmer, security, optimizer, reviewer, tester, scout, database, frontend, synthesis.\n\nGiven the task: (1) list the 3\u20135 highest-priority steps in order; (2) for each step, name the single best role; (3) flag blockers or missing information.\n\nEnd with EXACTLY one line:\nSELECTED: <comma-separated role names, priority order, max 3>",
       "tags": [
         "planning"
-      ]
+      ],
+      "use_rag": true
     },
     {
       "context": 1024,
@@ -137,12 +139,14 @@
       "model": "/Users/Shared/llama/models/MLX/MLX/Llama-3.2-1B-Instruct-4bit",
       "name": "mlx-scout",
       "port": 8083,
+      "rag_top_k": 5,
       "read_timeout_secs": 120,
       "server_group": "mlx1b",
       "system_prompt": "You are a concise technical assistant. Summarize information clearly and identify the key question or task being asked. Be brief and direct.",
       "tags": [
         "synthesis"
-      ]
+      ],
+      "use_rag": true
     },
     {
       "context": 1024,
@@ -213,13 +217,15 @@
       "model": "/Users/Shared/llama/models/medium/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
       "name": "reflector",
       "port": 8085,
+      "rag_top_k": 5,
       "read_timeout_secs": 720,
       "server_group": "llama8b",
       "system_prompt": "You are the Reflection agent. Read recent interaction episodes and extract durable lessons worth remembering forever. Output ONLY a JSON array of {\"kind\":\"fact|preference|procedure\",\"text\":\"...\",\"id\":\"<optional-slug>\"}. At most 8 high-value, non-redundant lessons; output [] if nothing is worth keeping.",
       "tags": [
         "memory",
         "reflection"
-      ]
+      ],
+      "use_rag": true
     },
     {
       "context": 4096,
@@ -263,12 +269,14 @@
       "name": "scout",
       "parallel": 3,
       "port": 8087,
+      "rag_top_k": 5,
       "read_timeout_secs": 120,
       "server_group": "gemma2b",
       "system_prompt": "You are the Research Scout. Find best practices, tools, risks, and emerging trends for the current task. Output: Key Findings, Recommendations, Risks, Alternatives.",
       "tags": [
         "synthesis"
-      ]
+      ],
+      "use_rag": true
     },
     {
       "context": 1024,
@@ -313,12 +321,14 @@
       "model": "/Users/Shared/llama/models/medium/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
       "name": "synthesis",
       "port": 8085,
+      "rag_top_k": 5,
       "read_timeout_secs": 720,
       "server_group": "llama8b",
       "system_prompt": "You are the Master Synthesizer. Reconcile all agent outputs into one production-ready deliverable. Resolve conflicts, fill gaps. Output: summary, architecture overview, complete code, deployment notes, production readiness checklist.",
       "tags": [
         "synthesis"
-      ]
+      ],
+      "use_rag": true
     },
     {
       "context": 1024,
