@@ -17,12 +17,14 @@
       "model": "/Users/Shared/llama/models/medium/qwen2.5-coder-7b-instruct-q4_k_m.gguf",
       "name": "architect",
       "port": 8086,
+      "rag_top_k": 5,
       "read_timeout_secs": 510,
       "server_group": "coder7b",
       "system_prompt": "You are the Lead Architect. Output ASCII UML diagrams, component relationships, and architecture decisions. Be precise and visual.",
       "tags": [
         "planning"
-      ]
+      ],
+      "use_rag": true
     },
     {
       "context": 1024,
@@ -41,12 +43,14 @@
       "model": "/Users/Shared/llama/models/medium/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
       "name": "database",
       "port": 8085,
+      "rag_top_k": 5,
       "read_timeout_secs": 120,
       "server_group": "llama8b",
       "system_prompt": "You are the Database Engineer. Design schemas, indexes, queries, and migrations for the given architecture. Output: ER diagram, DDL in code blocks, indexing strategy, query examples, migration plan.",
       "tags": [
         "data"
-      ]
+      ],
+      "use_rag": true
     },
     {
       "context": 1024,
@@ -65,12 +69,14 @@
       "model": "/Users/Shared/llama/models/medium/qwen2.5-coder-7b-instruct-q4_k_m.gguf",
       "name": "debugger",
       "port": 8086,
+      "rag_top_k": 5,
       "read_timeout_secs": 180,
       "server_group": "coder7b",
       "system_prompt": "You are the Debug Specialist. Perform root cause analysis on bugs and failures. Diagnose error propagation and provide targeted fixes with code.",
       "tags": [
         "coding"
-      ]
+      ],
+      "use_rag": true
     },
     {
       "context": 2048,
@@ -112,12 +118,14 @@
       "model": "/Users/Shared/llama/models/medium/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
       "name": "frontend",
       "port": 8085,
+      "rag_top_k": 5,
       "read_timeout_secs": 120,
       "server_group": "llama8b",
       "system_prompt": "You are the Senior Frontend Engineer. Implement React/TypeScript UIs. Output: component hierarchy, complete production-ready component code, styling approach, accessibility notes, backend integration notes.",
       "tags": [
         "coding"
-      ]
+      ],
+      "use_rag": true
     },
     {
       "context": 4096,
@@ -153,12 +161,14 @@
       "model": "/Users/Shared/llama/models/medium/qwen2.5-coder-7b-instruct-q4_k_m.gguf",
       "name": "optimizer",
       "port": 8086,
+      "rag_top_k": 5,
       "read_timeout_secs": 120,
       "server_group": "coder7b",
       "system_prompt": "You are the Performance Optimizer. Identify bottlenecks and propose concrete fixes. Output: priority table (Critical/High/Medium/Low), before/after comparisons, optimized code snippets.",
       "tags": [
         "coding"
-      ]
+      ],
+      "use_rag": true
     },
     {
       "context": 1024,
@@ -177,12 +187,14 @@
       "model": "/Users/Shared/llama/models/medium/qwen2.5-coder-7b-instruct-q4_k_m.gguf",
       "name": "programmer",
       "port": 8086,
+      "rag_top_k": 5,
       "read_timeout_secs": 930,
       "server_group": "coder7b",
       "system_prompt": "You are an expert programmer. Always respond with:\n\n1. Brief reasoning and explanation in normal text (outside any code block).\n2. Exactly one primary code block unless the user explicitly asks for multiple files.\n\nUse this format:\n```<language>\n// filename=path/to/file.ext  (optional but recommended)\n<code here>\n```\n\n- Language tag must match the requested language (python, cpp, rust, typescript, javascript, shell, etc.).\n- Put ALL executable code inside the fence.\n- Do not add extra fences or code outside the block.\n- Use clear variable names, comments, and error handling.\n- If multiple files are needed, use one fence with filename comments or multiple fences with filename= on the info line.\n\nDeliver complete, runnable, production-quality code \u2014 no stubs, no TODOs, no ellipses.",
       "tags": [
         "coding"
-      ]
+      ],
+      "use_rag": true
     },
     {
       "context": 1024,
@@ -275,12 +287,14 @@
       "model": "/Users/Shared/llama/models/large/gemma-2-9b-it-Q4_K_M.gguf",
       "name": "security",
       "port": 8084,
+      "rag_top_k": 5,
       "read_timeout_secs": 120,
       "server_group": "gemma9b",
       "system_prompt": "You are the Security Specialist. Audit for OWASP Top 10, auth flaws, injection, and data exposure. Output: overall risk score, findings by severity (Critical/High/Medium/Low) each with description, impact, and remediation code.",
       "tags": [
         "review"
-      ]
+      ],
+      "use_rag": true
     },
     {
       "context": 1024,
@@ -323,12 +337,14 @@
       "model": "/Users/Shared/llama/models/medium/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
       "name": "tester",
       "port": 8085,
+      "rag_top_k": 5,
       "read_timeout_secs": 150,
       "server_group": "llama8b",
       "system_prompt": "You are the QA Engineer. Write comprehensive test plans and actual test code. Output: Unit, Integration, and E2E sections each with working test examples and edge cases.",
       "tags": [
         "review"
-      ]
+      ],
+      "use_rag": true
     }
   ],
   "coordinator": {
