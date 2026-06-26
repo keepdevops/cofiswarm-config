@@ -21,6 +21,46 @@ var agentInternalKeys = map[string]bool{"agent_id": true}
 // requiredSplitFields mirrors migrate_swarm_config.REQUIRED_FIELDS.
 var requiredSplitFields = []string{"name", "model", "system_prompt", "context", "max_tokens"}
 
+// knownEngines are the inference engines the stack understands. The build rejects
+// anything else so a typo (e.g. "vlmm") fails here instead of at launch time.
+var knownEngines = map[string]bool{
+	"llama": true, "mlx": true, "vllm": true, "ollama": true, "sglang": true,
+}
+
+// effectiveEngine mirrors cofiswarm-mode-sdk's Agent.InferBackend: an explicit
+// "backend" overrides "engine"; default is llama.
+func effectiveEngine(a map[string]any) string {
+	if b, ok := a["backend"].(string); ok && b != "" {
+		return b
+	}
+	if e, ok := a["engine"].(string); ok && e != "" {
+		return e
+	}
+	return "llama"
+}
+
+// validateAgent enforces engine/model coherence at build time. vLLM is a shared
+// server addressed by a served model id (not a weights path), so a vllm agent
+// must carry a non-path "model" — the same field the modes pass through to
+// cofiswarm-backend-vllm. Failing here beats failing at inference time.
+func validateAgent(name string, a map[string]any) error {
+	eng := effectiveEngine(a)
+	if !knownEngines[eng] {
+		return fmt.Errorf("agent %q: unknown engine/backend %q (want one of llama, mlx, vllm, ollama, sglang)", name, eng)
+	}
+	if eng == "vllm" {
+		model, _ := a["model"].(string)
+		model = strings.TrimSpace(model)
+		if model == "" {
+			return fmt.Errorf("agent %q: engine vllm requires a non-empty \"model\" (the served model id)", name)
+		}
+		if strings.HasPrefix(model, "/") || strings.HasPrefix(model, "~") {
+			return fmt.Errorf("agent %q: vllm \"model\" must be a served model id, not a filesystem path (%q)", name, model)
+		}
+	}
+	return nil
+}
+
 func init() {
 	if os.Getenv("MATRIX_MODEL_DIR") == "" {
 		if runtime.GOOS == "darwin" {
@@ -137,6 +177,9 @@ func loadAgents(agentsDir string) ([]map[string]any, error) {
 				return nil, fmt.Errorf("%s: %w", p, err)
 			}
 			cleaned["model"] = exp
+		}
+		if err := validateAgent(cleaned["name"].(string), cleaned); err != nil {
+			return nil, fmt.Errorf("%s: %w", p, err)
 		}
 		agents = append(agents, cleaned)
 	}
