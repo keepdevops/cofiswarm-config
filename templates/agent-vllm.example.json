@@ -1,0 +1,15 @@
+{
+  "agent_id": "programmer-vllm",
+  "context": 8192,
+  "description": "Example vLLM agent. Copy into config/agents/ to deploy. vLLM is a shared OpenAI-compatible server (Docker Model Runner on :12434) addressed by a served model id, NOT a weights path.",
+  "engine": "vllm",
+  "max_tokens": 4096,
+  "model": "Qwen2.5-7B-Instruct-4bit",
+  "name": "programmer-vllm",
+  "port": 12434,
+  "system_prompt": "You are the Programmer. Produce complete, production-ready code with all imports, error handling, and full implementation. Never use placeholders.",
+  "tags": [
+    "coding"
+  ],
+  "use_rag": true
+}
